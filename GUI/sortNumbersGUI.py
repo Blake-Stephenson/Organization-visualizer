@@ -3,39 +3,9 @@
 
 from tkinter import *
 import Diagram as Diag
+
 from turtle_graphics import circle_venn_2 as V2
 from turtle_graphics import circle_venn_3 as V3
-
-
-def get_nums():
-    """ask for ints from terminal and returns them as int array"""
-
-    nums = []
-    line = input("Type numbers seperated by spaces: ")
-    line = line.strip(" ").split(" ")
-    for i in line:
-        try:
-            nums.append(int(i))
-        except ValueError:
-            print("only input integers")
-            return get_nums()
-    else:
-        return nums
-
-
-def getGroups() -> int:
-    """asks for an int and returns it"""
-
-    line = input("How many groups do you want: ")
-    line.strip(" ")
-    try:
-        line = int(line)
-    except ValueError:
-        print("only input integers")
-        return getGroups()
-    else:
-        return line
-
 
 
 def main():
@@ -56,11 +26,10 @@ def main():
         except:
             pass
 
-        diagram = Diag.Diagram(2,nums)
-        text_label['text'] = "Data: " ,str(diagram.getLabeledData())
+        diagram = Diag.Diagram(2, nums)
+        text_label['text'] = "Data: ", str(diagram.getLabeledData())
         vennDiag = V2.Venn2(diagram)
         vennDiag.printD()
-
 
     def three_groups(text_label):
         data = []
@@ -70,7 +39,9 @@ def main():
             pass
 
         diagram = Diag.Diagram(3, data)
-        text_label['text'] = "Data: " ,str(diagram.getLabeledData())
+        text_label['text'] = "Data: ", str(diagram.getLabeledData())
+        vennDiag = V3.Venn3(diagram)
+        vennDiag.printD()
 
     def four_groups(text_label):
         data = []
