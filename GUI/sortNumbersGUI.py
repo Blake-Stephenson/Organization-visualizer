@@ -2,6 +2,9 @@
 # @Date: 2022-1-29
 
 from tkinter import *
+import Diagram as Diag
+from turtle_graphics import circle_venn_2 as V2
+from turtle_graphics import circle_venn_3 as V3
 
 
 def get_nums():
@@ -34,64 +37,6 @@ def getGroups() -> int:
         return line
 
 
-def get_prime(n: int):
-    """returns first n primes"""
-
-    nums = []
-    index = 1
-    while len(nums) < n:
-        prime = True
-        for i in range(2, int(index ** 0.5) + 1):
-            if i != index and index % i == 0:
-                prime = False
-                break
-        if prime and index not in nums:
-            nums.append(index)
-        index += 1
-
-    return nums
-
-
-class Diagram():
-    allNums = []
-    boxes = [[]]
-    labels = []
-
-    def __init__(self, containers, nums):
-        self.allNums = nums
-        self.addNums()
-        self.boxes = [[]] * containers
-        self.labels = get_prime(containers)
-
-    def addNums(self):
-        for j in range(len(self.labels)):
-            label = self.labels[j]
-            group = []
-            for num in self.allNums:
-                if num % label == 0:
-                    # if i not in self.boxes[j]:
-                    group.append(num)
-            self.boxes[j] = group
-
-    def getLabeledData(self):
-        labeledData = []
-        for i in self.allNums:
-            label = ""
-            for j in self.labels:
-                if i % j == 0:
-                    label += str(j)
-            labeledData.append((i, label))
-        return labeledData
-
-    def getData(self):
-        return self.allNums
-
-    def getBoxes(self):
-        return self.boxes
-
-    def getGroups(self):
-        return self.labels
-
 
 def main():
     root = Tk()
@@ -111,8 +56,10 @@ def main():
         except:
             pass
 
-        diagram = Diagram(2,nums)
+        diagram = Diag.Diagram(2,nums)
         text_label['text'] = "Data: " ,str(diagram.getLabeledData())
+        vennDiag = V2.Venn2(diagram)
+        vennDiag.printD()
 
 
     def three_groups(text_label):
@@ -122,7 +69,7 @@ def main():
         except:
             pass
 
-        diagram = Diagram(3, data)
+        diagram = Diag.Diagram(3, data)
         text_label['text'] = "Data: " ,str(diagram.getLabeledData())
 
     def four_groups(text_label):
@@ -132,7 +79,7 @@ def main():
         except:
             pass
 
-        diagram = Diagram(4, data)
+        diagram = Diag.Diagram(4, data)
         text_label['text'] = "Data: ", str(diagram.getLabeledData())
 
     button2 = Button(root, text="Two Groups", padx=80, command=lambda: two_groups(data_box))
