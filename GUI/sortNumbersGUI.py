@@ -29,7 +29,7 @@ def main():
         diagram = Diag.Diagram(2, nums)
         text_label['text'] = "Data: ", str(diagram.getLabeledData())
         vennDiag = V2.Venn2(diagram)
-        vennDiag.printD()
+        vennDiag.printDiag()
 
     def three_groups(text_label):
         data = []
@@ -41,7 +41,7 @@ def main():
         diagram = Diag.Diagram(3, data)
         text_label['text'] = "Data: ", str(diagram.getLabeledData())
         vennDiag = V3.Venn3(diagram)
-        vennDiag.printD()
+        vennDiag.printDiag()
 
     def four_groups(text_label):
         data = []

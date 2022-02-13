@@ -47,7 +47,7 @@ class Diagram():
 
         nums = []
         index = 1
-        while len(nums) < n:
+        while len(nums) < n+1:
             prime = True
             for i in range(2, int(index ** 0.5) + 1):
                 if i != index and index % i == 0:
@@ -57,4 +57,4 @@ class Diagram():
                 nums.append(index)
             index += 1
 
-        return nums
+        return nums[1:]
