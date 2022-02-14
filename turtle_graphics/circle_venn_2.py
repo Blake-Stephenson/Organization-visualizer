@@ -1,5 +1,5 @@
 import turtle
-import Diagram as Diag
+from diagram import DData as Diag
 
 
 class Venn2:
@@ -8,7 +8,7 @@ class Venn2:
 
     def __init__(self, d: Diag):
         self.boxes = d.getBoxes()
-        self.labels = d.getGroups()
+        self.labels = d.getLabels()
         self.data = d.getData()
 
     def printDiag(self):

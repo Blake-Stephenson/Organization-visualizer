@@ -2,12 +2,12 @@
 # @Date: 2022-2-11
 
 class Diagram():
-    allNums = []
+    data = []
     boxes = [[]]
     labels = []
 
     def __init__(self, containers, nums):
-        self.allNums = nums
+        self.data = nums
         self.boxes = [[]] * containers
         self.labels = self.get_prime(containers)
         self.addNums()
@@ -17,7 +17,7 @@ class Diagram():
         for j in range(len(self.labels)):
             label = self.labels[j]
             group = []
-            for num in self.allNums:
+            for num in self.data:
                 if num % label == 0:
                     # if i not in self.boxes[j]:
                     group.append(num)
@@ -25,7 +25,7 @@ class Diagram():
 
     def getLabeledData(self):
         labeledData = []
-        for i in self.allNums:
+        for i in self.data:
             label = ""
             for j in self.labels:
                 if i % j == 0:
@@ -34,12 +34,12 @@ class Diagram():
         return labeledData
 
     def getData(self):
-        return self.allNums
+        return self.data
 
     def getBoxes(self):
         return self.boxes
 
-    def getGroups(self):
+    def getLabels(self):
         return self.labels
 
     def get_prime(self, n: int):

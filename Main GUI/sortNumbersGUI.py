@@ -2,8 +2,7 @@
 # @Date: 2022-1-29
 
 from tkinter import *
-import Diagram as Diag
-
+from diagram import DData as Diag
 from turtle_graphics import circle_venn_2 as V2
 from turtle_graphics import circle_venn_3 as V3
 
