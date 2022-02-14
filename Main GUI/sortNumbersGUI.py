@@ -2,9 +2,8 @@
 # @Date: 2022-1-29
 
 from tkinter import *
-from diagram import DData as Diag
-from turtle_graphics import circle_venn_2 as V2
-from turtle_graphics import circle_venn_3 as V3
+from diagram import DData as Data
+from diagram import DVenn as Venn
 
 
 def main():
@@ -25,10 +24,10 @@ def main():
         except:
             pass
 
-        diagram = Diag.Diagram(2, nums)
+        diagram = Data.DData(2, nums)
         text_label['text'] = "Data: ", str(diagram.getLabeledData())
-        vennDiag = V2.Venn2(diagram)
-        vennDiag.printDiag()
+        venn_diag = Venn.DVenn(diagram)
+        venn_diag.show()
 
     def three_groups(text_label):
         data = []
@@ -37,10 +36,10 @@ def main():
         except:
             pass
 
-        diagram = Diag.Diagram(3, data)
+        diagram = Data.DData(3, data)
         text_label['text'] = "Data: ", str(diagram.getLabeledData())
-        vennDiag = V3.Venn3(diagram)
-        vennDiag.printDiag()
+        venn_diag = Venn.DVenn(diagram)
+        venn_diag.show()
 
     def four_groups(text_label):
         data = []
@@ -49,7 +48,7 @@ def main():
         except:
             pass
 
-        diagram = Diag.Diagram(4, data)
+        diagram = Data.DData(4, data)
         text_label['text'] = "Data: ", str(diagram.getLabeledData())
 
     button2 = Button(root, text="Two Groups", padx=80, command=lambda: two_groups(data_box))

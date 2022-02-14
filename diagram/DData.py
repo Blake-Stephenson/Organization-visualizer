@@ -1,7 +1,7 @@
 # @Author: Blake Stephenson
 # @Date: 2022-2-11
 
-class Diagram():
+class DData:
     data = []
     boxes = [[]]
     labels = []
@@ -11,7 +11,6 @@ class Diagram():
         self.boxes = [[]] * containers
         self.labels = self.get_prime(containers)
         self.addNums()
-
 
     def addNums(self):
         for j in range(len(self.labels)):
