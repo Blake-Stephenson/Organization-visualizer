@@ -6,11 +6,13 @@ class DData:
     boxes = [[]]
     labels = []
 
-    def __init__(self, containers, nums):
+
+    def __init__(self, containers, nums, t):
         self.data = nums
         self.boxes = [[]] * containers
         self.labels = self.get_prime(containers)
         self.addNums()
+        self.t = t
 
     def addNums(self):
         for j in range(len(self.labels)):
@@ -40,6 +42,9 @@ class DData:
 
     def getLabels(self):
         return self.labels
+
+    def getT(self):
+        return self.t
 
     def get_prime(self, n: int):
         """returns first n primes"""

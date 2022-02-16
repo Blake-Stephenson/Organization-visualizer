@@ -25,16 +25,14 @@ class Venn2:
         self.boxes = d.getBoxes()
         self.labels = d.getLabels()
         self.data = d.getData()
+        self.t = d.getT()
 
     def printDiag(self):
         lens = [len(i) for i in self.boxes]
         x = max(lens)
         r = 50 + 5 * x
-        # close any old turtle
-        turtle.bye()
-        canvas = turtle.Screen()
-        turtle.TurtleScreen._RUNNING = True
-        t = turtle.Turtle(visible=False)
+
+        t = self.t
         t.speed(20)
         t.circle(r)
         t.color('blue')
@@ -47,7 +45,6 @@ class Venn2:
         self.printTextRight(r)
         self.printTextMid(r)
         self.printOther(r)
-        canvas.exitonclick()
 
     def printTextLeft(self, r: int):
         nums = self.boxes[0][:]
@@ -55,7 +52,7 @@ class Venn2:
             if i in nums:
                 nums.remove(i)
         turtle.TurtleScreen._RUNNING = True
-        t = turtle.Turtle(visible=False)
+        t = self.t
         t.setheading(270)
         t.penup()
         t.speed(10)
@@ -73,8 +70,7 @@ class Venn2:
         for i in self.boxes[0]:
             if i in nums:
                 nums.remove(i)
-        turtle.TurtleScreen._RUNNING = True
-        t = turtle.Turtle(visible=False)
+        t = self.t
         t.right(90)
         t.penup()
         t.speed(10)
@@ -93,8 +89,7 @@ class Venn2:
             for j in self.boxes[1]:
                 if i == j:
                     nums.append(i)
-        turtle.TurtleScreen._RUNNING = True
-        t = turtle.Turtle(visible=False)
+        t = self.t
         t.right(90)
         t.penup()
         t.speed(10)
@@ -113,8 +108,7 @@ class Venn2:
         for i in self.boxes[1]:
             if i in nums:
                 nums.remove(i)
-        turtle.TurtleScreen._RUNNING = True
-        t = turtle.Turtle(visible=False)
+        t = self.t
         t.right(90)
         t.penup()
         t.speed(10)
@@ -122,6 +116,7 @@ class Venn2:
         t.goto(0, -20)
         print(nums)
         t.write("Other: %s" % nums)
+
 
 class Venn3:
     boxes = [[]]
@@ -132,16 +127,14 @@ class Venn3:
         self.boxes = d.getBoxes()
         self.labels = d.getLabels()
         self.data = d.getData()
+        self.t = d.getT()
 
     def printDiag(self):
         lens = [len(i) for i in self.boxes]
         x = max(lens)
         r = 50 + 5 * x
-        # close any old turtle
-        turtle.bye()
-        canvas = turtle.Screen()
-        turtle.TurtleScreen._RUNNING = True
-        t = turtle.Turtle(visible=False)
+
+        t = self.t
         t.speed(20)
         t.circle(r)
         t.color('blue')
@@ -166,7 +159,7 @@ class Venn3:
         self.printABC(r)
 
         self.printOther(r)
-        canvas.exitonclick()
+
 
     def printA(self, r: int):
         nums = self.boxes[0][:]
@@ -177,8 +170,7 @@ class Venn3:
             if i in nums:
                 nums.remove(i)
 
-        turtle.TurtleScreen._RUNNING = True
-        t = turtle.Turtle(visible=False)
+        t = self.t
         t.setheading(270)
         t.penup()
         t.speed(10)
@@ -200,8 +192,7 @@ class Venn3:
             if i in nums:
                 nums.remove(i)
 
-        turtle.TurtleScreen._RUNNING = True
-        t = turtle.Turtle(visible=False)
+        t = self.t
         t.setheading(270)
         t.penup()
         t.speed(10)
@@ -223,8 +214,7 @@ class Venn3:
             if i in nums:
                 nums.remove(i)
 
-        turtle.TurtleScreen._RUNNING = True
-        t = turtle.Turtle(visible=False)
+        t = self.t
         t.setheading(270)
         t.penup()
         t.speed(10)
@@ -247,13 +237,12 @@ class Venn3:
             if i in nums:
                 nums.remove(i)
 
-        turtle.TurtleScreen._RUNNING = True
-        t = turtle.Turtle(visible=False)
+        t = self.t
         t.setheading(270)
         t.penup()
         t.speed(10)
         # Print nums
-        t.goto(r/2, r * 1.3 + (5 * len(nums)))
+        t.goto(r / 2, r * 1.3 + (5 * len(nums)))
         for i in nums:
             t.write(i)
             t.fd(10)
@@ -268,8 +257,7 @@ class Venn3:
             if i in nums:
                 nums.remove(i)
 
-        turtle.TurtleScreen._RUNNING = True
-        t = turtle.Turtle(visible=False)
+        t = self.t
         t.setheading(270)
         t.penup()
         t.speed(10)
@@ -289,13 +277,12 @@ class Venn3:
             if i in nums:
                 nums.remove(i)
 
-        turtle.TurtleScreen._RUNNING = True
-        t = turtle.Turtle(visible=False)
+        t = self.t
         t.setheading(270)
         t.penup()
         t.speed(10)
         # Print nums
-        t.goto(r*1.05, r * 0.25 + (5 * len(nums)))
+        t.goto(r * 1.05, r * 0.25 + (5 * len(nums)))
         for i in nums:
             t.write(i)
             t.fd(10)
@@ -308,13 +295,12 @@ class Venn3:
                     if i == j and i == k:
                         nums.append(i)
 
-        turtle.TurtleScreen._RUNNING = True
-        t = turtle.Turtle(visible=False)
+        t = self.t
         t.setheading(270)
         t.penup()
         t.speed(10)
         # Print nums
-        t.goto(r / 2 - 5, r * 0.5 + (5 * len(nums)) )
+        t.goto(r / 2 - 5, r * 0.5 + (5 * len(nums)))
         for i in nums:
             t.write(i)
             t.fd(10)
@@ -330,8 +316,7 @@ class Venn3:
         for i in self.boxes[2]:
             if i in nums:
                 nums.remove(i)
-        turtle.TurtleScreen._RUNNING = True
-        t = turtle.Turtle(visible=False)
+        t = self.t
         t.right(90)
         t.penup()
         t.speed(10)

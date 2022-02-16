@@ -1,20 +1,36 @@
 # @Author: Blake Stephenson
 # @Date: 2022-1-29
 
+import turtle
 from tkinter import *
 from diagram import DData as Data
 from diagram import DVenn as Venn
+import tools
+
 
 
 def main():
     root = Tk()
+    root.title("Venn Prime")
+    # Dimentions of window
+    x = 600
+    y = 600
+    root.geometry(f"{x}x{y}")
 
+    canvas= Canvas(root, width=x, height=y-80)
+    canvas.place(x=0, y=80)
+    t = turtle.RawTurtle(canvas)
+    t.hideturtle()
+
+    # show heading
     heading = Label(root, text="Enter Data separated by spaces")
-    heading.grid(row=0, columnspan=3)
+    heading.place(x=0, y=0, width=x, height=20)
+    # show data input box
     get_data = Entry(root, width=80)
-    get_data.grid(row=1, columnspan=3)
+    get_data.place(x=0, y=20, width=x, height=20)
+    # show display box
     data_box = Label(root, text="")
-    data_box.grid(row=3, columnspan=3)
+    data_box.place(x=0, y=40, width=x, height=20)
 
     def two_groups(text_label):
         nums = []
@@ -24,7 +40,7 @@ def main():
         except:
             pass
 
-        diagram = Data.DData(2, nums)
+        diagram = Data.DData(2, nums, t)
         text_label['text'] = "Data: ", str(diagram.getLabeledData())
         venn_diag = Venn.DVenn(diagram)
         venn_diag.show()
@@ -36,7 +52,7 @@ def main():
         except:
             pass
 
-        diagram = Data.DData(3, data)
+        diagram = Data.DData(3, data, t)
         text_label['text'] = "Data: ", str(diagram.getLabeledData())
         venn_diag = Venn.DVenn(diagram)
         venn_diag.show()
@@ -48,16 +64,16 @@ def main():
         except:
             pass
 
-        diagram = Data.DData(4, data)
+        diagram = Data.DData(4, data, t)
         text_label['text'] = "Data: ", str(diagram.getLabeledData())
 
-    button2 = Button(root, text="Two Groups", padx=80, command=lambda: two_groups(data_box))
-    button3 = Button(root, text="Three Groups", padx=80, command=lambda: three_groups(data_box))
-    button4 = Button(root, text="Four Groups", padx=80, command=lambda: four_groups(data_box))
+    button2 = Button(root, text="Two Groups", command=lambda: two_groups(data_box))
+    button3 = Button(root, text="Three Groups", command=lambda: three_groups(data_box))
+    button4 = Button(root, text="Four Groups", command=lambda: four_groups(data_box))
 
-    button2.grid(row=2, column=0)
-    button3.grid(row=2, column=1)
-    button4.grid(row=2, column=2)
+    button2.place(x=0, y=60, width=x / 3, height=20)
+    button3.place(x=x / 3, y=60, width=x / 3, height=20)
+    button4.place(x=x * 2 / 3, y=60, width=x / 3, height=20)
 
     root.mainloop()
 
