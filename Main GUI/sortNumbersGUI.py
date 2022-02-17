@@ -5,7 +5,6 @@ import turtle
 from tkinter import *
 from diagram import DData as Data
 from diagram import DVenn as Venn
-import tools
 
 
 
@@ -35,24 +34,27 @@ def main():
     def two_groups(text_label):
         nums = []
         try:
-            data = get_data.get().strip(" ").split(" ")
-            nums = [int(num) for num in data]
+            nums = get_data.get()
+            nums = cleanData(nums)
         except:
             pass
 
+        clearTurtle(t)
         diagram = Data.DData(2, nums, t)
         text_label['text'] = "Data: ", str(diagram.getLabeledData())
         venn_diag = Venn.DVenn(diagram)
         venn_diag.show()
 
     def three_groups(text_label):
-        data = []
+        nums = []
         try:
-            data = [int(num) for num in get_data.get().strip(" ").split(" ")]
+            nums = get_data.get()
+            nums = cleanData(nums)
         except:
             pass
 
-        diagram = Data.DData(3, data, t)
+        clearTurtle(t)
+        diagram = Data.DData(3, nums, t)
         text_label['text'] = "Data: ", str(diagram.getLabeledData())
         venn_diag = Venn.DVenn(diagram)
         venn_diag.show()
@@ -64,6 +66,7 @@ def main():
         except:
             pass
 
+        clearTurtle(t)
         diagram = Data.DData(4, data, t)
         text_label['text'] = "Data: ", str(diagram.getLabeledData())
 
@@ -77,6 +80,33 @@ def main():
 
     root.mainloop()
 
+def clearTurtle(t):
+    t.clear()
+    t.home()
+    t.setheading(0)
+
+def cleanData(nums):
+    nums = nums.strip(" ").split(" ")
+    l_nums = len(nums)
+    # sort data, remove non-int
+    for i in range(l_nums):
+        try:
+            nums[i] = int(nums[i].strip(" "))
+        except:
+            nums[i] = 0
+    for i in range(1, l_nums):
+        x = nums[i]
+        index = i - 1
+        while x < nums[index] and index >= 0:
+            nums[index + 1] = nums[index]
+            index -= 1
+        nums[index + 1] = x
+    # remove duplicates
+    for i in range(len(nums) - 2):
+        while i < len(nums) - 1 and nums[i] == nums[i + 1]:
+            nums = nums[:i] + nums[i + 1:]
+
+    return nums
 
 if __name__ == '__main__':
     main()

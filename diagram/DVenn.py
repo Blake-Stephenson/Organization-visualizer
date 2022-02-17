@@ -30,9 +30,15 @@ class Venn2:
     def printDiag(self):
         lens = [len(i) for i in self.boxes]
         x = max(lens)
-        r = 50 + 5 * x
+        r = 40 + 3 * x
+        hx = -r / 2
+        hy = -r / 2
 
         t = self.t
+        t.penup()
+        t.goto(hx, hy)
+        t.pendown()
+        t.color('black')
         t.speed(20)
         t.circle(r)
         t.color('blue')
@@ -41,12 +47,12 @@ class Venn2:
         t.pendown()
         t.circle(r)
         t.penup()
-        self.printTextLeft(r)
-        self.printTextRight(r)
-        self.printTextMid(r)
-        self.printOther(r)
+        self.printTextLeft(r, (hx, hy))
+        self.printTextRight(r, (hx, hy))
+        self.printTextMid(r, (hx, hy))
+        self.printOther(r, (hx, hy))
 
-    def printTextLeft(self, r: int):
+    def printTextLeft(self, r: int, home: (int, int)):
         nums = self.boxes[0][:]
         for i in self.boxes[1]:
             if i in nums:
@@ -55,53 +61,49 @@ class Venn2:
         t = self.t
         t.setheading(270)
         t.penup()
-        t.speed(10)
         # Print label
-        t.goto(0, 2 * r + 5)
+        t.goto(home[0], home[1] + 2 * r + 5)
         t.write(self.labels[0])
         # Print nums
-        t.goto(-r / 3, r + (5 * len(nums)))
+        t.goto(home[0] - r / 3, home[1] + r + (5 * len(nums)))
         for i in nums:
             t.write(i)
             t.fd(10)
 
-    def printTextRight(self, r: int):
+    def printTextRight(self, r: int, home: (int, int)):
         nums = self.boxes[1][:]
         for i in self.boxes[0]:
             if i in nums:
                 nums.remove(i)
         t = self.t
-        t.right(90)
+        t.setheading(270)
         t.penup()
-        t.speed(10)
         # Print label
-        t.goto(r, 2 * r + 5)
+        t.goto(home[0] + r, home[1] + 2 * r + 5)
         t.write(self.labels[1])
         # Print nums
-        t.goto(r * 5 / 4, r + (5 * len(nums)))
+        t.goto(home[0] + r * 5 / 4, home[1] + r + (5 * len(nums)))
         for i in nums:
             t.write(i)
             t.fd(10)
 
-    def printTextMid(self, r: int):
+    def printTextMid(self, r: int, home: (int, int)):
         nums = []
         for i in self.boxes[0]:
             for j in self.boxes[1]:
                 if i == j:
                     nums.append(i)
         t = self.t
-        t.right(90)
+        t.setheading(270)
         t.penup()
-        t.speed(10)
         # Print nums
-        t.goto(r / 2, r + (5 * len(nums)))
+        t.goto(home[0] + r / 2 - 5, home[1] + r + (5 * (len(nums)-1)))
         for i in nums:
             t.write(i)
             t.fd(10)
 
-    def printOther(self, r: int):
+    def printOther(self, r: int, home: (int, int)):
         nums = self.data[:]
-        print(nums)
         for i in self.boxes[0]:
             if i in nums:
                 nums.remove(i)
@@ -113,8 +115,7 @@ class Venn2:
         t.penup()
         t.speed(10)
         # Print nums
-        t.goto(0, -20)
-        print(nums)
+        t.goto(home[0], home[1] - 20)
         t.write("Other: %s" % nums)
 
 
@@ -132,9 +133,15 @@ class Venn3:
     def printDiag(self):
         lens = [len(i) for i in self.boxes]
         x = max(lens)
-        r = 50 + 5 * x
+        r = 40 + 4 * x
+        hx = -r / 2
+        hy = -r / 2
 
         t = self.t
+        t.penup()
+        t.goto(hx, hy)
+        t.pendown()
+        t.color('black')
         t.speed(20)
         t.circle(r)
         t.color('blue')
@@ -150,18 +157,16 @@ class Venn3:
         t.pendown()
         t.circle(r)
         t.penup()
-        self.printA(r)
-        self.printB(r)
-        self.printC(r)
-        self.printAB(r)
-        self.printAC(r)
-        self.printBC(r)
-        self.printABC(r)
+        self.printA(r, (hx, hy))
+        self.printB(r, (hx, hy))
+        self.printC(r, (hx, hy))
+        self.printAB(r, (hx, hy))
+        self.printAC(r, (hx, hy))
+        self.printBC(r, (hx, hy))
+        self.printABC(r, (hx, hy))
+        self.printOther(r, (hx, hy))
 
-        self.printOther(r)
-
-
-    def printA(self, r: int):
+    def printA(self, r: int, home: (int, int)):
         nums = self.boxes[0][:]
         for i in self.boxes[1]:
             if i in nums:
@@ -173,17 +178,16 @@ class Venn3:
         t = self.t
         t.setheading(270)
         t.penup()
-        t.speed(10)
         # Print label
-        t.goto(0, 2 * r + 5)
+        t.goto(home[0], home[1] + 2 * r + 5)
         t.write(self.labels[0])
         # Print nums
-        t.goto(-r / 3, r * 1.2 + (5 * len(nums)))
+        t.goto(home[0] - r / 3, home[1] + r * 1.2 + (5 * len(nums)))
         for i in nums:
             t.write(i)
             t.fd(10)
 
-    def printB(self, r: int):
+    def printB(self, r: int, home: (int, int)):
         nums = self.boxes[1][:]
         for i in self.boxes[0]:
             if i in nums:
@@ -195,17 +199,16 @@ class Venn3:
         t = self.t
         t.setheading(270)
         t.penup()
-        t.speed(10)
         # Print label
-        t.goto(r, 2 * r + 5)
+        t.goto(home[0] + r, home[1] + 2 * r + 5)
         t.write(self.labels[1])
         # Print nums
-        t.goto(r * 4 / 3, r * 1.2 + (5 * len(nums)))
+        t.goto(home[0] + r * 4 / 3, home[1] + r * 1.2 + (5 * len(nums)))
         for i in nums:
             t.write(i)
             t.fd(10)
 
-    def printC(self, r: int):
+    def printC(self, r: int, home: (int, int)):
         nums = self.boxes[2][:]
         for i in self.boxes[0]:
             if i in nums:
@@ -217,17 +220,16 @@ class Venn3:
         t = self.t
         t.setheading(270)
         t.penup()
-        t.speed(10)
         # Print label
-        t.goto(r / 2, -r - 10)
+        t.goto(home[0] + r / 2, home[1] - r - 10)
         t.write(self.labels[2])
         # Print nums
-        t.goto(r / 2, -r * 0.6 + (5 * len(nums)))
+        t.goto(home[0] + r / 2, home[1] - r * 0.6 + (5 * len(nums)))
         for i in nums:
             t.write(i)
             t.fd(10)
 
-    def printAB(self, r: int):
+    def printAB(self, r: int, home: (int, int)):
         nums = []
         for i in self.boxes[0]:
             for j in self.boxes[1]:
@@ -240,14 +242,13 @@ class Venn3:
         t = self.t
         t.setheading(270)
         t.penup()
-        t.speed(10)
         # Print nums
-        t.goto(r / 2, r * 1.3 + (5 * len(nums)))
+        t.goto(home[0] + r / 2, home[1] + r * 1.38 + (5 * len(nums)))
         for i in nums:
             t.write(i)
             t.fd(10)
 
-    def printAC(self, r: int):
+    def printAC(self, r: int, home: (int, int)):
         nums = []
         for i in self.boxes[0]:
             for j in self.boxes[2]:
@@ -262,12 +263,12 @@ class Venn3:
         t.penup()
         t.speed(10)
         # Print nums
-        t.goto(-r / 5, r * 0.25 + (5 * len(nums)))
+        t.goto(home[0] - r / 5, home[1] + r * 0.25 + (5 * len(nums)))
         for i in nums:
             t.write(i)
             t.fd(10)
 
-    def printBC(self, r: int):
+    def printBC(self, r: int, home: (int, int)):
         nums = []
         for i in self.boxes[1]:
             for j in self.boxes[2]:
@@ -280,14 +281,13 @@ class Venn3:
         t = self.t
         t.setheading(270)
         t.penup()
-        t.speed(10)
         # Print nums
-        t.goto(r * 1.05, r * 0.25 + (5 * len(nums)))
+        t.goto(home[0] + r * 1.05, home[1] + r * 0.25 + (5 * len(nums)))
         for i in nums:
             t.write(i)
             t.fd(10)
 
-    def printABC(self, r: int):
+    def printABC(self, r: int, home: (int, int)):
         nums = []
         for i in self.boxes[0]:
             for j in self.boxes[1]:
@@ -298,14 +298,13 @@ class Venn3:
         t = self.t
         t.setheading(270)
         t.penup()
-        t.speed(10)
         # Print nums
-        t.goto(r / 2 - 5, r * 0.5 + (5 * len(nums)))
+        t.goto(home[0] + r / 2 - 5, home[1] + r * 0.5 + (5 * len(nums)))
         for i in nums:
             t.write(i)
             t.fd(10)
 
-    def printOther(self, r: int):
+    def printOther(self, r: int, home: (int, int)):
         nums = self.data[:]
         for i in self.boxes[0]:
             if i in nums:
@@ -319,7 +318,6 @@ class Venn3:
         t = self.t
         t.right(90)
         t.penup()
-        t.speed(10)
         # Print nums
-        t.goto(0, -r - 30)
+        t.goto(home[0], home[1] - r - 30)
         t.write("Other: %s" % nums)
