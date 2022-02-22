@@ -1,6 +1,6 @@
 # @Author: Blake Stephenson
 # @Date: 2022-1-29
-
+import random
 import turtle
 from tkinter import *
 from diagram import DData as Data
@@ -60,14 +60,17 @@ def main():
         venn_diag.show()
 
     def four_groups(text_label):
-        data = []
+        nums = []
         try:
-            data = [int(num) for num in get_data.get().strip(" ").split(" ")]
+            nums = get_data.get()
+            nums = cleanData(nums)
         except:
             pass
 
         clearTurtle(t)
-        diagram = Data.DData(4, data, t)
+        #nums = [random.randint(0, 500) for i in range(50)]
+        #nums = cleanData(str(nums)[1:-1])
+        diagram = Data.DData(4, nums, t)
         text_label['text'] = "Data: ", str(diagram.getLabeledData())
         venn_diag = Venn.DVenn(diagram)
         venn_diag.show()
@@ -93,7 +96,7 @@ def cleanData(nums):
     # sort data, remove non-int
     for i in range(l_nums):
         try:
-            nums[i] = int(nums[i].strip(" "))
+            nums[i] = int(nums[i].strip(" ").strip(","))
         except:
             nums[i] = 0
     for i in range(1, l_nums):
@@ -107,6 +110,10 @@ def cleanData(nums):
     for i in range(len(nums) - 2):
         while i < len(nums) - 1 and nums[i] == nums[i + 1]:
             nums = nums[:i] + nums[i + 1:]
+
+    #remove 0
+    if nums[0] == 0:
+        nums = nums[1:]
 
     return nums
 

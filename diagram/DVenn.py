@@ -336,12 +336,12 @@ class Venn4:
         self.t = d.getT()
 
     def printDiag(self):
-        width = 260
+        width = 300
         length = int(width / 4)
 
         #home coords
         hx = 0
-        hy = 0
+        hy = -50
 
         t = self.t
         t.penup()
@@ -359,7 +359,20 @@ class Venn4:
         self.drawOval(width, length, hx, hy-yoff, True)
         self.printA(width, (hx, hy))
         self.printB(width, (hx, hy))
-
+        self.printC(width, (hx, hy))
+        self.printD(width, (hx, hy))
+        self.printAB(width, (hx, hy))
+        self.printAC(width, (hx, hy))
+        self.printAD(width, (hx, hy))
+        self.printBC(width, (hx, hy))
+        self.printBD(width, (hx, hy))
+        self.printCD(width, (hx, hy))
+        self.printABC(width, (hx, hy))
+        self.printABD(width, (hx, hy))
+        self.printACD(width, (hx, hy))
+        self.printBCD(width, (hx, hy))
+        self.printABCD(width, (hx, hy))
+        self.printOther(width, (hx, hy))
 
     def printA(self, r: int, home: (int, int)):
         #left oval
@@ -413,57 +426,305 @@ class Venn4:
 
     def printC(self, r: int, home: (int, int)):
         # mid left oval
+        nums = self.boxes[2][:]
+        for i in self.boxes[0]:
+            if i in nums:
+                nums.remove(i)
+        for i in self.boxes[1]:
+            if i in nums:
+                nums.remove(i)
+        for i in self.boxes[3]:
+            if i in nums:
+                nums.remove(i)
 
-        return 1
+        t = self.t
+        t.setheading(270)
+        t.penup()
+        # Print label
+        t.goto(home[0] - r * 0.3, home[1] + r * 0.9)
+        t.write(self.labels[2])
+        # Print nums
+        t.goto(home[0] - r * 0.3, home[1] + r * 0.75 + (5 * len(nums)))
+        for i in nums:
+            t.write(i)
+            t.fd(10)
 
     def printD(self, r: int, home: (int, int)):
         # mid right oval
+        nums = self.boxes[3][:]
+        for i in self.boxes[0]:
+            if i in nums:
+                nums.remove(i)
+        for i in self.boxes[1]:
+            if i in nums:
+                nums.remove(i)
+        for i in self.boxes[2]:
+            if i in nums:
+                nums.remove(i)
 
-        return 1
+        t = self.t
+        t.setheading(270)
+        t.penup()
+        # Print label
+        t.goto(home[0] + r * 0.3, home[1] + r * 0.9)
+        t.write(self.labels[3])
+        # Print nums
+        t.goto(home[0] + r * 0.3, home[1] + r * 0.75 + (5 * len(nums)))
+        for i in nums:
+            t.write(i)
+            t.fd(10)
 
     def printAB(self, r: int, home: (int, int)):
+        nums = []
+        for i in self.boxes[0]:
+            for j in self.boxes[1]:
+                if i == j:
+                    nums.append(i)
+        for i in self.boxes[2]:
+            if i in nums:
+                nums.remove(i)
+        for i in self.boxes[3]:
+            if i in nums:
+                nums.remove(i)
 
-        return 1
+        t = self.t
+        t.setheading(270)
+        t.penup()
+        # Print nums
+        t.goto(home[0] - 5, home[1] - r * 0.08 + (5 * len(nums)))
+        for i in nums:
+            t.write(i)
+            t.fd(10)
 
     def printAC(self, r: int, home: (int, int)):
+        nums = []
+        for i in self.boxes[0]:
+            for j in self.boxes[2]:
+                if i == j:
+                    nums.append(i)
+        for i in self.boxes[1]:
+            if i in nums:
+                nums.remove(i)
+        for i in self.boxes[3]:
+            if i in nums:
+                nums.remove(i)
 
-        return 1
+        t = self.t
+        t.setheading(270)
+        t.penup()
+        # Print nums
+        t.goto(home[0] - r * 0.5, home[1] + r * 0.6 + (5 * len(nums)))
+        for i in nums:
+            t.write(i)
+            t.fd(10)
 
     def printAD(self, r: int, home: (int, int)):
+        nums = []
+        for i in self.boxes[0]:
+            for j in self.boxes[3]:
+                if i == j:
+                    nums.append(i)
+        for i in self.boxes[1]:
+            if i in nums:
+                nums.remove(i)
+        for i in self.boxes[2]:
+            if i in nums:
+                nums.remove(i)
 
-        return 1
+        t = self.t
+        t.setheading(270)
+        t.penup()
+        # Print nums
+        t.goto(home[0] - r * 0.48, home[1] + r * 0.18 + (5 * len(nums)))
+        for i in nums:
+            t.write(i)
+            t.fd(10)
 
     def printBC(self, r: int, home: (int, int)):
 
-        return 1
+        nums = []
+        for i in self.boxes[1]:
+            for j in self.boxes[2]:
+                if i == j:
+                    nums.append(i)
+        for i in self.boxes[0]:
+            if i in nums:
+                nums.remove(i)
+        for i in self.boxes[3]:
+            if i in nums:
+                nums.remove(i)
+
+        t = self.t
+        t.setheading(270)
+        t.penup()
+        # Print nums
+        t.goto(home[0] + r * 0.48, home[1] + r * 0.18 + (5 * len(nums)))
+        for i in nums:
+            t.write(i)
+            t.fd(10)
 
     def printBD(self, r: int, home: (int, int)):
+        nums = []
+        for i in self.boxes[1]:
+            for j in self.boxes[3]:
+                if i == j:
+                    nums.append(i)
+        for i in self.boxes[2]:
+            if i in nums:
+                nums.remove(i)
+        for i in self.boxes[0]:
+            if i in nums:
+                nums.remove(i)
 
-        return 1
+        t = self.t
+        t.setheading(270)
+        t.penup()
+        # Print nums
+        t.goto(home[0] + r * 0.45, home[1] + r * 0.6 + (5 * len(nums)))
+        for i in nums:
+            t.write(i)
+            t.fd(10)
 
     def printCD(self, r: int, home: (int, int)):
+        nums = []
+        for i in self.boxes[2]:
+            for j in self.boxes[3]:
+                if i == j:
+                    nums.append(i)
+        for i in self.boxes[0]:
+            if i in nums:
+                nums.remove(i)
+        for i in self.boxes[1]:
+            if i in nums:
+                nums.remove(i)
 
-        return 1
+        t = self.t
+        t.setheading(270)
+        t.penup()
+        # Print nums
+        t.goto(home[0] - 5, home[1] + r * 0.65 + (5 * len(nums)))
+        for i in nums:
+            t.write(i)
+            t.fd(10)
 
     def printABC(self, r: int, home: (int, int)):
+        nums = []
+        for i in self.boxes[0]:
+            for j in self.boxes[1]:
+                for k in self.boxes[2]:
+                    if i == j and i == k:
+                        nums.append(i)
+        for i in self.boxes[3]:
+            if i in nums:
+                nums.remove(i)
 
-        return 1
+        t = self.t
+        t.setheading(270)
+        t.penup()
+        # Print nums
+        t.goto(home[0] + r * 0.17, home[1] + r * 0.05 + (5 * len(nums)))
+        for i in nums:
+            t.write(i)
+            t.fd(10)
 
     def printABD(self, r: int, home: (int, int)):
+        nums = []
+        for i in self.boxes[0]:
+            for j in self.boxes[1]:
+                for k in self.boxes[3]:
+                    if i == j and i == k:
+                        nums.append(i)
+        for i in self.boxes[2]:
+            if i in nums:
+                nums.remove(i)
 
-        return 1
+        t = self.t
+        t.setheading(270)
+        t.penup()
+        # Print nums
+        t.goto(home[0] - r * 0.19, home[1] + r * 0.05 + (5 * len(nums)))
+        for i in nums:
+            t.write(i)
+            t.fd(10)
 
     def printACD(self, r: int, home: (int, int)):
+        nums = []
+        for i in self.boxes[0]:
+            for j in self.boxes[2]:
+                for k in self.boxes[3]:
+                    if i == j and i == k:
+                        nums.append(i)
+        for i in self.boxes[1]:
+            if i in nums:
+                nums.remove(i)
 
-        return 1
+        t = self.t
+        t.setheading(270)
+        t.penup()
+        # Print nums
+        t.goto(home[0] - r * 0.3, home[1] + r * 0.45 + (5 * len(nums)))
+        for i in nums:
+            t.write(i)
+            t.fd(10)
 
     def printBCD(self, r: int, home: (int, int)):
+        nums = []
+        for i in self.boxes[1]:
+            for j in self.boxes[2]:
+                for k in self.boxes[3]:
+                    if i == j and i == k:
+                        nums.append(i)
+        for i in self.boxes[0]:
+            if i in nums:
+                nums.remove(i)
 
-        return 1
+        t = self.t
+        t.setheading(270)
+        t.penup()
+        # Print nums
+        t.goto(home[0] + r * 0.3, home[1] + r * 0.45 + (5 * len(nums)))
+        for i in nums:
+            t.write(i)
+            t.fd(10)
 
     def printABCD(self, r: int, home: (int, int)):
+        nums = []
+        for i in self.boxes[0]:
+            for j in self.boxes[1]:
+                for k in self.boxes[2]:
+                    for p in self.boxes[3]:
+                        if i == j and i == k and i == p:
+                            nums.append(i)
+        t = self.t
+        t.setheading(270)
+        t.penup()
+        # Print nums
+        t.goto(home[0] - 5, home[1] + r * 0.25 + (5 * len(nums)))
+        for i in nums:
+            t.write(i)
+            t.fd(10)
 
-        return 1
+    def printOther(self, r: int, home: (int, int)):
+        nums = self.data[:]
+        for i in self.boxes[0]:
+            if i in nums:
+                nums.remove(i)
+        for i in self.boxes[1]:
+            if i in nums:
+                nums.remove(i)
+        for i in self.boxes[2]:
+            if i in nums:
+                nums.remove(i)
+        for i in self.boxes[3]:
+            if i in nums:
+                nums.remove(i)
+
+        t = self.t
+        t.right(90)
+        t.penup()
+        # Print nums
+        t.goto(home[0] - 40, home[1] - r * 0.2 - 10)
+        t.write("Other: %s" % nums)
 
     def drawOval(self, w: int, l: int, x: int, y: int, right: bool):
         t = self.t
