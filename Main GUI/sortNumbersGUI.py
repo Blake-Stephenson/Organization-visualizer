@@ -69,6 +69,8 @@ def main():
         clearTurtle(t)
         diagram = Data.DData(4, data, t)
         text_label['text'] = "Data: ", str(diagram.getLabeledData())
+        venn_diag = Venn.DVenn(diagram)
+        venn_diag.show()
 
     button2 = Button(root, text="Two Groups", command=lambda: two_groups(data_box))
     button3 = Button(root, text="Three Groups", command=lambda: three_groups(data_box))

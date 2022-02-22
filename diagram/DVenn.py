@@ -11,6 +11,8 @@ class DVenn:
             self.venn = Venn2(d)
         elif self.size == 3:
             self.venn = Venn3(d)
+        elif self.size == 4:
+            self.venn = Venn4(d)
 
     def show(self):
         self.venn.printDiag()
@@ -321,3 +323,162 @@ class Venn3:
         # Print nums
         t.goto(home[0], home[1] - r - 30)
         t.write("Other: %s" % nums)
+
+class Venn4:
+    boxes = [[]]
+    labels = []
+    data = []
+
+    def __init__(self, d: Diag):
+        self.boxes = d.getBoxes()
+        self.labels = d.getLabels()
+        self.data = d.getData()
+        self.t = d.getT()
+
+    def printDiag(self):
+        width = 260
+        length = int(width / 4)
+
+        #home coords
+        hx = 0
+        hy = 0
+
+        t = self.t
+        t.penup()
+        t.speed(20)
+
+        # draw diagram ovals
+        xoff = int(width * 0.35)
+        yoff = int(width * 0.12)
+        # draw x
+        t.color("black")
+        self.drawOval(width, length, hx+xoff, hy, False)
+        self.drawOval(width, length, hx+-xoff, hy, True)
+        # draw v
+        self.drawOval(width, length, hx, hy-yoff, False)
+        self.drawOval(width, length, hx, hy-yoff, True)
+        self.printA(width, (hx, hy))
+        self.printB(width, (hx, hy))
+
+
+    def printA(self, r: int, home: (int, int)):
+        #left oval
+        nums = self.boxes[0][:]
+        for i in self.boxes[1]:
+            if i in nums:
+                nums.remove(i)
+        for i in self.boxes[2]:
+            if i in nums:
+                nums.remove(i)
+        for i in self.boxes[3]:
+            if i in nums:
+                nums.remove(i)
+
+        t = self.t
+        t.setheading(270)
+        t.penup()
+        # Print label
+        t.goto(home[0] - r * 0.7, home[1] + r * 0.8)
+        t.write(self.labels[0])
+        # Print nums
+        t.goto(home[0] - r * 0.7, home[1] + r * 0.45 + (5 * len(nums)))
+        for i in nums:
+            t.write(i)
+            t.fd(10)
+
+    def printB(self, r: int, home: (int, int)):
+        # right oval
+        nums = self.boxes[1][:]
+        for i in self.boxes[0]:
+            if i in nums:
+                nums.remove(i)
+        for i in self.boxes[2]:
+            if i in nums:
+                nums.remove(i)
+        for i in self.boxes[3]:
+            if i in nums:
+                nums.remove(i)
+
+        t = self.t
+        t.setheading(270)
+        t.penup()
+        # Print label
+        t.goto(home[0] + r * 0.7, home[1] + r * 0.8)
+        t.write(self.labels[1])
+        # Print nums
+        t.goto(home[0] + r * 0.7, home[1] + r * 0.45 + (5 * len(nums)))
+        for i in nums:
+            t.write(i)
+            t.fd(10)
+
+    def printC(self, r: int, home: (int, int)):
+        # mid left oval
+
+        return 1
+
+    def printD(self, r: int, home: (int, int)):
+        # mid right oval
+
+        return 1
+
+    def printAB(self, r: int, home: (int, int)):
+
+        return 1
+
+    def printAC(self, r: int, home: (int, int)):
+
+        return 1
+
+    def printAD(self, r: int, home: (int, int)):
+
+        return 1
+
+    def printBC(self, r: int, home: (int, int)):
+
+        return 1
+
+    def printBD(self, r: int, home: (int, int)):
+
+        return 1
+
+    def printCD(self, r: int, home: (int, int)):
+
+        return 1
+
+    def printABC(self, r: int, home: (int, int)):
+
+        return 1
+
+    def printABD(self, r: int, home: (int, int)):
+
+        return 1
+
+    def printACD(self, r: int, home: (int, int)):
+
+        return 1
+
+    def printBCD(self, r: int, home: (int, int)):
+
+        return 1
+
+    def printABCD(self, r: int, home: (int, int)):
+
+        return 1
+
+    def drawOval(self, w: int, l: int, x: int, y: int, right: bool):
+        t = self.t
+        t.penup()
+        t.goto(x, y)
+        t.pendown()
+
+        # right
+        if right:
+            for i in range(2):
+                # two arcs
+                t.circle(w, 60)
+                t.circle(l, 120)
+        else:
+            for i in range(2):
+                # two arcs
+                t.circle(l, 120)
+                t.circle(w, 60)
