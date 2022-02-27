@@ -35,24 +35,46 @@ class Venn2:
         r = 40 + 3 * x
         hx = -r / 2
         hy = -r / 2
+        home = (hx, hy)
 
         t = self.t
-        t.penup()
-        t.goto(hx, hy)
-        t.pendown()
-        t.color('black')
+        t.ht()
         t.speed(20)
+        # move to start
+        t.penup()
+        t.goto(home)
+        # draw circle one
+        t.color("#EB3431", "#EB5670")
+        t.pendown()
+        t.begin_fill()
         t.circle(r)
-        t.color('blue')
+        t.end_fill()
+        # move to next
         t.penup()
         t.forward(r)
+        # draw circle two
         t.pendown()
+        t.color("#253BEB", "#636EEB")
+        t.begin_fill()
         t.circle(r)
+        t.end_fill()
+        # move to middle
         t.penup()
-        self.printTextLeft(r, (hx, hy))
-        self.printTextRight(r, (hx, hy))
-        self.printTextMid(r, (hx, hy))
-        self.printOther(r, (hx, hy))
+        t.color("#C114F0", "#D254F0")
+        t.goto(home)
+        t.circle(r, 30)
+        t.pendown()
+        t.begin_fill()
+        t.circle(r, 120)
+        t.setheading(210)
+        t.circle(r, 120)
+        t.end_fill()
+        t.color("black")
+        t.penup()
+        self.printTextLeft(r, home)
+        self.printTextRight(r, home)
+        self.printTextMid(r, home)
+        self.printOther(r, home)
 
     def printTextLeft(self, r: int, home: (int, int)):
         nums = self.boxes[0][:]
@@ -138,35 +160,98 @@ class Venn3:
         r = 40 + 4 * x
         hx = -r / 2
         hy = -r / 2
+        home = (hx, hy)
 
         t = self.t
+        t.ht()
+        t.speed(30)
+        # move to start
         t.penup()
-        t.goto(hx, hy)
+        t.goto(home)
+        # draw circle one
+        t.color("#EB3431", "#EB5670")
         t.pendown()
-        t.color('black')
-        t.speed(20)
+        t.begin_fill()
         t.circle(r)
-        t.color('blue')
+        t.end_fill()
+        # move to next
         t.penup()
         t.forward(r)
+        # draw circle two
         t.pendown()
+        t.color("#253BEB", "#636EEB")
+        t.begin_fill()
         t.circle(r)
+        t.end_fill()
+
+        # draw bottom circle
         t.penup()
-        t.back(r / 2)
-        t.left(90)
-        t.back(0.87 * r)
-        t.right(90)
+        t.goto(home[0] + r / 2, home[1] - r * 0.866)
+        t.color("#E0D910", "#FFFA16")
         t.pendown()
+        t.begin_fill()
         t.circle(r)
+        t.end_fill()
         t.penup()
-        self.printA(r, (hx, hy))
-        self.printB(r, (hx, hy))
-        self.printC(r, (hx, hy))
-        self.printAB(r, (hx, hy))
-        self.printAC(r, (hx, hy))
-        self.printBC(r, (hx, hy))
-        self.printABC(r, (hx, hy))
-        self.printOther(r, (hx, hy))
+
+        t.circle(r, 90)
+        t.setheading(90)
+        t.color("#02FA00", "#4DFA58")
+        t.pendown()
+        t.begin_fill()
+        t.circle(r, 120)
+        t.setheading(270)
+        t.circle(r, 120)
+        t.end_fill()
+        t.penup()
+
+        t.goto(home[0] + r / 2, home[1] - r * 0.866)
+        t.setheading(0)
+        t.circle(r, 150)
+        t.setheading(150)
+        t.color("#FF8A00", "#FF9A2D")
+        t.pendown()
+        t.begin_fill()
+        t.circle(r, 120)
+        t.setheading(330)
+        t.circle(r, 120)
+        t.end_fill()
+
+        # over lap two pieces
+        t.penup()
+        t.color("#C114F0", "#D254F0")
+        t.goto(home)
+        t.setheading(0)
+        t.circle(r, 30)
+        t.pendown()
+        t.begin_fill()
+        t.circle(r, 120)
+        t.setheading(210)
+        t.circle(r, 120)
+        t.end_fill()
+
+        t.penup()
+        t.color("#A6B3AB", "#C0CFC6")
+        t.setheading(30)
+        t.pendown()
+        t.begin_fill()
+        t.circle(r, 60)
+        t.setheading(150)
+        t.circle(r, 60)
+        t.setheading(270)
+        t.circle(r, 60)
+        t.end_fill()
+
+        t.color("black")
+        t.penup()
+        self.printA(r, home)
+        self.printB(r, home)
+        self.printC(r, home)
+        self.printAB(r, home)
+        self.printAC(r, home)
+        self.printBC(r, home)
+        self.printABC(r, home)
+        self.printOther(r, home)
 
     def printA(self, r: int, home: (int, int)):
         nums = self.boxes[0][:]
@@ -245,7 +330,7 @@ class Venn3:
         t.setheading(270)
         t.penup()
         # Print nums
-        t.goto(home[0] + r / 2, home[1] + r * 1.38 + (5 * len(nums)))
+        t.goto(home[0] + r / 2, home[1] + r * 1.2 + (5 * len(nums)))
         for i in nums:
             t.write(i)
             t.fd(10)
